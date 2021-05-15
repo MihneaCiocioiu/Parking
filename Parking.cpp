@@ -1,11 +1,16 @@
 // Parking.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <Windows.h>
 #include <iostream>
 
-int main()
-{
-    std::cout << "MACAC!\n";
+using namespace std;
+
+int main() {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    WORD culoare= FOREGROUND_BLUE;
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+    cout <<"Hello World!\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
