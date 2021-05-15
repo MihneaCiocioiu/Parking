@@ -10,7 +10,11 @@ int main() {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     WORD culoare= FOREGROUND_BLUE;
     SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-    cout <<"Hello World!\n";
+    cout <<"Red!\n";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+    cout <<"Blue!\n";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY);
+    cout <<"Green!\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
