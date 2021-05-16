@@ -2,19 +2,24 @@
 //
 
 #include <Windows.h>
+#include <stdlib.h>
 #include <iostream>
+#include "parkingLot.h"
 
 using namespace std;
+parkingLot a;
 
 int main() {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    WORD culoare= FOREGROUND_BLUE;
+    a=parkingLot(13);
+ /*   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
     cout <<"Red!\n";
     SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
     cout <<"Blue!\n";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY);
-    cout <<"Green!\n";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+    cout <<"Green!\n"; */
+    cout << a.getSize()<<"\n";
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
