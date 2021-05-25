@@ -57,6 +57,13 @@ public:
 		if (capacity % length) return 2 + capacity / length * 4 + 4;
 		else return  2 + capacity / length * 4;
 	}
+	int isEmpty(int location) { 
+		if (a[(location-1) % length ][(location-1) / length].getID() != 0) return 0;
+		return 1;
+	}
+	void parkCar(int location) {
+		a[(location-1) % length][(location-1) / length].setID(10);
+	}
 	void show(_COORD coord) {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleCursorPosition(hConsole, coord);
@@ -84,17 +91,21 @@ public:
 				cout << (char)179;
 				int id = a[i][j].getID();
 				if (id == 0) cout << "   ";
-				else if (id <= 9) cout << "  ";
-				else if (id <= 99) cout << " ";
-				else cout << id;
+				else {
+					if (id <= 9) cout << "  ";
+					else if (id <= 99) cout << " ";
+					cout << id;
+				}
 			}
 			if (i < l && l != 0) {
 				cout << (char)179;
 				int id = a[i][L].getID();
-				if (id==0) cout<<"   ";
-				else if (id <= 9) cout << "  ";
-				else if (id <= 99) cout << " ";
-				else cout << id;
+				if (id == 0) cout << "   ";
+				else {
+					if (id <= 9) cout << "  ";
+					else if (id <= 99) cout << " ";
+					cout << id;
+				}
 			}
 			cout << (char)179;
 			coord.Y++;
