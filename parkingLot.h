@@ -12,7 +12,10 @@ private:
 	int capacity;
 	int length=6;
 	int id;
+	int profit=0;
+	int cost=1;
 	const char* type;
+	const char* location;
 	vector<vector<car>> a;
 public:
 	parkingLot() {
@@ -23,6 +26,20 @@ public:
 		capacity = size;
 		type = Type;
 		a.resize(length, vector<car>(capacity / length, 0));
+		if (capacity % length != 0) {
+			for (int i = 0; i < capacity % length; i++) {
+				a[i].push_back(car(0));
+			}
+		}
+	}
+	parkingLot(int size, const char* Type,const char* Location) {
+		capacity = size;
+		type = Type;
+		location = Location;
+		a.resize(length, vector<car>(capacity / length, 0));
+		if (strcmp(location, "center") == 0) cost = 10;
+		else if (strcmp(location, "busy area") == 0) cost = 5;
+		else if (strcmp(location, "residential area") == 0) cost = 3;
 		if (capacity % length != 0) {
 			for (int i = 0; i < capacity % length; i++) {
 				a[i].push_back(car(0));
@@ -64,10 +81,26 @@ public:
 	void parkCar(int location) {
 		a[(location-1) % length][(location-1) / length].setID(10);
 	}
+	void calculateProfit() {
+		for (auto line : a) {
+			for (auto car : line) {
+				if (car.getID()) profit +=cost;
+			}
+		}
+	}
+	int getProfit() {
+		return profit;
+	}
 	void show(_COORD coord) {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << "Id: " << capacity;
+		coord.Y++;
+		SetConsoleCursorPosition(hConsole, coord);
+		cout << "Location: " << location;
+		coord.Y++;
+		SetConsoleCursorPosition(hConsole, coord);
+		cout << "Profit: " << profit;
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << "Type: " << type;

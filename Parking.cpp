@@ -5,33 +5,34 @@
 #include <cstdlib>
 #include <stdlib.h>
 #include <iostream>
+#include <fstream>
 #include "parkingLot.h"
 #include "car.h"
+//#include <json/value.h>
+//#include <jsoncpp/json/json.h>
 
 using namespace std;
 parkingLot a,b,c;
 parkingLot lot[4][4];
-int currentTime=1420;
+int currentTime=0;
 
 int main() {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (i == 0) lot[i][j] = parkingLot(30, "orange");
-            if (i == 1) lot[i][j] = parkingLot(30, "blue");
-            if (i == 2) lot[i][j] = parkingLot(30, "purple");
-        }
-    }
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    //a = parkingLot(27,"orange");
-    //a.parkCar(27);
-    //a.show({ 0,0 });
-    /*  SetConsoleTextAttribute(hConsole,  FOREGROUND_RED|FOREGROUND_INTENSITY);
-    cout << a.getSize() << "\n";
-    a.show({ 0,0 });
-    int width = a.getWidth();
-    b.show({ 30,0 });
-    SetConsoleTextAttribute(hConsole,  FOREGROUND_BLUE|FOREGROUND_INTENSITY);
-    c.show({ 0,18 }); */
+    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    //ifstream jsonIn("parkingLots.json");
+    //jsonIn >> parkingLots;
+    lot[0][0] = parkingLot(30, "orange", "center");
+    lot[0][1] = parkingLot(30, "orange", "busy area");
+    lot[0][2] = parkingLot(30, "orange", "residential area");
+
+    lot[1][0] = parkingLot(30, "blue", "center");
+    lot[1][1] = parkingLot(30, "blue", "busy area");
+    lot[1][2] = parkingLot(30, "blue", "residential area");
+
+    lot[2][0] = parkingLot(30, "purple", "center");
+    lot[2][1] = parkingLot(30, "purple", "busy area");
+    lot[2][2] = parkingLot(30, "purple", "residential area");
+
     srand(time(0));
     while (true) {
         cout << "Time: ";
@@ -55,19 +56,24 @@ int main() {
             place++;
             if (lot[row][col].isEmpty(place)) lot[row][col].parkCar(place);
         }
+        if (currentTime % 15 == 0) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    lot[i][j].calculateProfit();
+                }
+            }
+        }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i == 0) SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
                 else if (i == 1) SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
                 else SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-                lot[i][j].show({ (short)j * (short)(max(13,lot[i][j].getWidth())),(short)1+ (short)i * 16 });
+                lot[i][j].show({ (short)j * (short)(max(13,lot[i][j].getWidth())),(short)1+ (short)i * 18});
             }
         }
-     //   Sleep(1000);
+        Sleep(1000);
         currentTime++;
         system("cls");
       //  cout.flush();
     }
-  //  SetConsoleCursorPosition(hConsole, { 8,15 });
-   // a.show({ 8,15 });
 }

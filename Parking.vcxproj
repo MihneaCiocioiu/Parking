@@ -145,6 +145,9 @@
     <ClInclude Include="car.h" />
     <ClInclude Include="parkingLot.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="parkingLots.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -10,6 +10,10 @@ public:
 	car(int id) {
 		ID = id;
 	}
+	car(int id, int _parkedTime) {
+		ID = id;
+		parkedTime = _parkedTime;
+	}
 	int getParkedTime() {
 		return parkedTime;
 	}
