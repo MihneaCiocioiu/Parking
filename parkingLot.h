@@ -162,7 +162,7 @@ public:
 		cout << "Location: " << location;
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
-		cout << "Profit: " << profit;
+		cout << "Revenue: " << profit;
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << "Type: " << type;

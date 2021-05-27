@@ -195,8 +195,7 @@ int main() {
         for (int i = 0; i < cars.size(); i++) {
             cars[i].show({ (short)maxWidth,(short)1 + (short)i });
         }
-
-     //   Sleep(1000);
+        Sleep(1000);
      //   system("pause");
         currentTime++;
         system("cls");
