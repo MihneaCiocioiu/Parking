@@ -158,7 +158,7 @@ int main() {
             const char* name = lot[row][col].getStringID();
             int place = rand() % lot[row][col].getSize();
             place++;
-            cars.push_back(car(ID++,parkedTime,row,col,place,currentTime,name));
+            cars.push_back(car(ID++,parkedTime,row,col,place,currentTime,name,maxTime));
             if (lot[row][col].isEmpty(place)) lot[row][col].parkCar(place,cars[cars.size()-1]);
         }
         for (int i = 0; i < cars.size();i++) {
@@ -196,7 +196,7 @@ int main() {
             cars[i].show({ (short)maxWidth,(short)1 + (short)i });
         }
 
-        Sleep(1000);
+     //   Sleep(1000);
      //   system("pause");
         currentTime++;
         system("cls");

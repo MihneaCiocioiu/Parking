@@ -48,9 +48,6 @@ public:
 		strcpy_s(location , Location);
 		id = Id;
 		a.resize(length, vector<car>(capacity / length, 0));
-		if (strcmp(location, "center") == 0) cost = 10;
-		else if (strcmp(location, "busy area") == 0) cost = 5;
-		else if (strcmp(location, "residential area") == 0) cost = 3;
 
 		char name[10];
 		if (strcmp(type, "orange") == 0) {

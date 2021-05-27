@@ -14,6 +14,7 @@ private:
 	int arrivalTime;
 	int timeUntilPay=0;
 	int alarm = 0;
+	int maxTime;
 	const char* parkingLotID;
 public:
 	void showTime(int currentTime) {
@@ -48,7 +49,7 @@ public:
 		ID = id;
 		parkedTime = _parkedTime;
 	}
-	car(int id, int _parkedTime, int _lotRow, int _lotCol,int _parkedPlace,int _arrivalTime, const char* _parkingLotID) {
+	car(int id, int _parkedTime, int _lotRow, int _lotCol,int _parkedPlace,int _arrivalTime, const char* _parkingLotID, int _maxTime) {
 		ID = id;
 		parkedTime = _parkedTime;
 		lotRow = _lotRow;
@@ -56,16 +57,24 @@ public:
 		parkingLotID = _parkingLotID;
 		parkedPlace = _parkedPlace;
 		arrivalTime = _arrivalTime;
+		maxTime = _maxTime;
 	}
 	void show(_COORD coord) {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleCursorPosition(hConsole, coord);
-		cout << "car: " << ID << " " << "Parked in: " << parkingLotID << " For: "; showTimeWithoutAm(parkedTime * 15); cout << " minutes " << "Arrived at: "; showTime(arrivalTime);
+		cout << "car: " << ID << " " << "Parked in: " << parkingLotID << " for: "; showTimeWithoutAm(parkedTime * 15); cout << "hours " << "Arrived at: "; showTime(arrivalTime);
 		cout << " " << "Leaving at: "; showTime(arrivalTime + parkedTime * 15);
 	}
 	void checkAlarm(int currentTime) {
-		if (abs((arrivalTime + (parkedTime * 15))-currentTime)  <= 10) {
+		if (abs((arrivalTime + (parkedTime * 15))-currentTime)  <= 10&&alarm==0) {
 			alarm = 1;
+			int extend = rand() % 4;
+			if (extend==1) {
+				arrivalTime = currentTime;
+				parkedTime = rand() % maxTime;
+				if (parkedTime == 0) parkedTime = 1;
+				alarm = 0;
+			}
 		}
 	}
 	int getAlarm() {
