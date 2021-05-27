@@ -10,21 +10,27 @@ using namespace std;
 class parkingLot {
 private:
 	int capacity;
-	int length=6;
+	int length=5;
 	int id;
 	int profit=0;
+	int normalPrice;
+	int extraPrice;
+	int extraPriceStart;
+	int extraPriceEnd;
 	int cost=1;
-	const char* type;
-	const char* location;
+	int maxTime;
+	char type[20];
+	char location[20];
+	char ID[10];
 	vector<vector<car>> a;
 public:
 	parkingLot() {
 		capacity = 0;
 		a.clear();
 	}
-	parkingLot(int size, const char *Type) {
+	parkingLot(int size, char Type[]) {
 		capacity = size;
-		type = Type;
+		strcpy_s(type , Type);
 		a.resize(length, vector<car>(capacity / length, 0));
 		if (capacity % length != 0) {
 			for (int i = 0; i < capacity % length; i++) {
@@ -32,19 +38,61 @@ public:
 			}
 		}
 	}
-	parkingLot(int size, const char* Type,const char* Location) {
+	parkingLot(int size, char Type[20],char Location[20],int Id,int _normalPrice, int _extraPrice, int _extraPriceStart, int _extraPriceEnd) {
 		capacity = size;
-		type = Type;
-		location = Location;
+		normalPrice = _normalPrice;
+		extraPrice = _extraPrice;
+		extraPriceStart = _extraPriceStart;
+		extraPriceEnd = _extraPriceEnd;
+		strcpy_s(type , Type);
+		strcpy_s(location , Location);
+		id = Id;
 		a.resize(length, vector<car>(capacity / length, 0));
 		if (strcmp(location, "center") == 0) cost = 10;
 		else if (strcmp(location, "busy area") == 0) cost = 5;
 		else if (strcmp(location, "residential area") == 0) cost = 3;
+
+		char name[10];
+		if (strcmp(type, "orange") == 0) {
+			maxTime = 4;
+			strcpy_s(name, "O_");
+		}
+
+		else if (strcmp(type, "blue") == 0) {
+			maxTime = 12;
+			strcpy_s(name, "B_");
+		}
+		else if (strcmp(type, "purple") == 0) {
+			maxTime = 96;
+			strcpy_s(name, "P_");
+		}
+		if (id < 10) {
+			strcat_s(name, "00");
+			char aa[2];
+			aa[1] = 0;
+			aa[0] = '0' + id;
+			strcat_s(name, aa);
+		}
+		else if (id < 100) {
+			strcat_s(name, "0");
+			char aa[3];
+			aa[2] = 0;
+			strcat_s(name, aa);
+			int c1 = id / 10;
+			int c2 = id % 10;
+			aa[0] = '0' + c1;
+			aa[1] = '0' + c2;
+			strcat_s(name, aa);
+		}
+		strcpy_s(ID , name);
 		if (capacity % length != 0) {
 			for (int i = 0; i < capacity % length; i++) {
 				a[i].push_back(car(0));
 			}
 		}
+	}
+	const char* getStringID() {
+		return ID;
 	}
 	parkingLot(int size) {
 		capacity = size;
@@ -70,16 +118,19 @@ public:
 	int getSize() {
 		return capacity;
 	}
+	int getMaxTime() {
+		return maxTime;
+	}
 	int getWidth() {
-		if (capacity % length) return 2 + capacity / length * 4 + 4;
-		else return  2 + capacity / length * 4;
+		if (capacity % length) return max(27,2 + capacity / length * 4 + 4);
+		else return  max(27, 2 + capacity / length * 4);
 	}
 	int isEmpty(int location) { 
 		if (a[(location-1) % length ][(location-1) / length].getID() != 0) return 0;
 		return 1;
 	}
-	void parkCar(int location) {
-		a[(location-1) % length][(location-1) / length].setID(10);
+	void parkCar(int location, car Car) {
+		a[(location-1) % length][(location-1) / length]=Car;
 	}
 	void calculateProfit() {
 		for (auto line : a) {
@@ -91,10 +142,24 @@ public:
 	int getProfit() {
 		return profit;
 	}
+	void cash(int value) {
+		profit += value;
+	}
+	int getCurrentPrice(int currentTime) {
+		int hour = (currentTime / 60) % 24;
+		if (hour >= extraPriceStart && hour <= extraPriceEnd) {
+			cost = extraPrice;
+		}
+		else cost = normalPrice;
+		return cost;
+	}
+	void checkAlarmLocation(int location, int currentTime) {
+		a[(location - 1) % length][(location - 1) / length].checkAlarm(currentTime);
+	}
 	void show(_COORD coord) {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleCursorPosition(hConsole, coord);
-		cout << "Id: " << capacity;
+		cout << "Id: " << ID;
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << "Location: " << location;
@@ -107,6 +172,15 @@ public:
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << "Capacity: " << capacity;
+		coord.Y++;
+		SetConsoleCursorPosition(hConsole, coord);
+		cout << "Normal price: " << normalPrice;
+		coord.Y++;
+		SetConsoleCursorPosition(hConsole, coord);
+		cout << "Extra price: " << extraPrice;
+		coord.Y++;
+		SetConsoleCursorPosition(hConsole, coord);
+		cout << "Extra price hours: " << extraPriceStart<<" - "<<extraPriceEnd;
 		coord.Y++;
 		SetConsoleCursorPosition(hConsole, coord);
 		cout << (char)218;
@@ -122,21 +196,37 @@ public:
 			SetConsoleCursorPosition(hConsole, coord);
 			for (int j = 0; j < L; j++) {
 				cout << (char)179;
-				int id = a[i][j].getID();
-				if (id == 0) cout << "   ";
+				if (a[i][j].getAlarm() == 0) {
+					int id = a[i][j].getID();
+					if (id == 0) cout << "   ";
+					else {
+						if (id <= 9) cout << "  ";
+						else if (id <= 99) cout << " ";
+						cout << id;
+					}
+				}
 				else {
-					if (id <= 9) cout << "  ";
-					else if (id <= 99) cout << " ";
+					int id = a[i][j].getID();
+					if (id <= 9) cout << "! ";
+					else if (id <= 99) cout << "!";
 					cout << id;
 				}
 			}
 			if (i < l && l != 0) {
 				cout << (char)179;
-				int id = a[i][L].getID();
-				if (id == 0) cout << "   ";
+				if (!a[i][L].getID()) {
+					int id = a[i][L].getID();
+					if (id == 0) cout << "   ";
+					else {
+						if (id <= 9) cout << "  ";
+						else if (id <= 99) cout << " ";
+						cout << id;
+					}
+				}
 				else {
-					if (id <= 9) cout << "  ";
-					else if (id <= 99) cout << " ";
+					int id = a[i][L].getID();
+					if (id <= 9) cout << "! ";
+					else if (id <= 99) cout << "!";
 					cout << id;
 				}
 			}

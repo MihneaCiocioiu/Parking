@@ -1,0 +1,69 @@
+Orange Lots: 3
+	Lot 1:
+		Size: 30
+		Type: orange
+		Location: center
+		Normal price: 10
+		Extra price: 20
+		Extra price starting hour: 6
+		Extra price ending hour: 12
+	Lot 2:
+		Size: 30
+		Type: orange
+		Location: busy area
+		Normal price: 6
+		Extra price: 10
+		Extra price starting hour: 6
+		Extra price ending hour: 12
+	Lot 3:
+		Size: 30
+		Type: orange
+		Location: residential area
+		Normal price: 4
+		Extra price: -
+Purple Lots: 3
+	Lot 1:
+		Size: 30
+		Type: purple
+		Location: center
+		Normal price: 10
+		Extra price: -
+	Lot 2:
+		Size: 30
+		Type: purple
+		Location: busy area
+		Normal price: 5
+		Extra price: 9
+		Extra price starting hour: 6
+		Extra price ending hour: 12
+	Lot 3:
+		Size: 30
+		Type: purple
+		Location: residential area
+		Normal price: 5
+		Extra price: 9
+		Extra price starting hour: 6
+		Extra price ending hour: 12
+Blue Lots: 3
+	Lot 1:
+		Size: 30
+		Type: blue
+		Location: center
+		Normal price: 8
+		Extra price: -
+	Lot 2:
+		Size: 30
+		Type: blue
+		Location: busy area
+		Normal price: 5
+		Extra price: 6
+		Extra price starting hour: 6
+		Extra price ending hour: 12
+	Lot 3:
+		Size: 30
+		Type: blue
+		Location: residential area
+		Normal price: 3
+		Extra price: 9
+		Extra price starting hour: 6
+		Extra price ending hour: 12

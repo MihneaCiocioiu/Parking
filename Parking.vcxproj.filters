@@ -28,8 +28,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="parkingLots.json">
+    <Text Include="ParkingLots.txt">
       <Filter>Source Files</Filter>
-    </None>
+    </Text>
   </ItemGroup>
 </Project>
