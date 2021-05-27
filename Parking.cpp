@@ -166,6 +166,17 @@ int main() {
                 lot[cars[i].getRow()][cars[i].getCol()].cash(lot[cars[i].getRow()][cars[i].getCol()].getCurrentPrice(currentTime));
             }
         }
+
+        for (int i = 0; i < cars.size(); i++) {
+            lot[cars[i].getRow()][cars[i].getCol()].checkAlarmLocation(cars[i].getparkedLocation(),currentTime);
+
+            if (currentTime==cars[i].getLeavingTime()) {
+                lot[cars[i].getRow()][cars[i].getCol()].parkCar(cars[i].getparkedLocation(), car(0));
+                cars.erase(cars.begin() + i);
+                i--;
+            }
+        }
+
         for (int i = 0; i < 3; i++) {
             int width = 0;
             for (int j = 0; j < lot[i].size(); j++) {
@@ -179,15 +190,6 @@ int main() {
 
         SetConsoleCursorPosition(hConsole, {(short)maxWidth,0});
 
-        for (int i = 0; i < cars.size(); i++) {
-            lot[cars[i].getRow()][cars[i].getCol()].checkAlarmLocation(cars[i].getparkedLocation(),currentTime);
-
-            if (currentTime==cars[i].getLeavingTime()) {
-                lot[cars[i].getRow()][cars[i].getCol()].parkCar(cars[i].getparkedLocation(), car(0));
-                cars.erase(cars.begin() + i);
-                i--;
-            }
-        }
 
         SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
