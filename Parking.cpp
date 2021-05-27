@@ -24,7 +24,6 @@ void showTime(int currentTime) {
     cout << " ";
     if (hour <= 12) cout << "AM";
     else  if (hour <= 23) cout << "PM";
-    else currentTime = 0;
 }
 
 int main() {

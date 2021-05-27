@@ -27,7 +27,16 @@ public:
 		cout << " ";
 		if (hour <= 12) cout << "AM";
 		else  if (hour <= 23) cout << "PM";
-		else currentTime = 0;
+	}
+	void showTimeWithoutAm(int currentTime) {
+		int hour = (currentTime / 60) % 24;
+		int minute = currentTime % 60;
+		if (hour < 10) cout << 0 << hour;
+		else cout << hour;
+		cout << ":";
+		if (minute < 10) cout << 0 << minute;
+		else cout << minute;
+		cout << " ";
 	}
 	car() {
 		parkedTime = 0;
@@ -51,7 +60,7 @@ public:
 	void show(_COORD coord) {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleCursorPosition(hConsole, coord);
-		cout << "car: " << ID << " " << "Parked in: " << parkingLotID << " For: " << parkedTime * 15 << " minutes " << "Arrived at: "; showTime(arrivalTime);
+		cout << "car: " << ID << " " << "Parked in: " << parkingLotID << " For: "; showTimeWithoutAm(parkedTime * 15); cout << " minutes " << "Arrived at: "; showTime(arrivalTime);
 		cout << " " << "Leaving at: "; showTime(arrivalTime + parkedTime * 15);
 	}
 	void checkAlarm(int currentTime) {
