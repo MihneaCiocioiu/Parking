@@ -161,6 +161,7 @@ int main() {
             cars.push_back(car(ID++,parkedTime,row,col,place,currentTime,name,maxTime));
             if (lot[row][col].isEmpty(place)) lot[row][col].parkCar(place,cars[cars.size()-1]);
         }
+
         for (int i = 0; i < cars.size();i++) {
             if (cars[i].pay(currentTime)) {
                 lot[cars[i].getRow()][cars[i].getCol()].cash(lot[cars[i].getRow()][cars[i].getCol()].getCurrentPrice(currentTime));
