@@ -10,12 +10,12 @@ The purple parking lots support parking for up to 3 hours.
 The blue parking lots support parking for up to 24 hours.
 
 The prices differ according to the location of the parking lot (center, busy areas, residential areas)
-The parking lots can also have different prices according to hour intervals
+The parking lots can also have different prices according to predefined hourly intervals
 
 For example, parking may be 10 dollars normally, but it can get to 20 dollars between 6 AM and 12 AM
 
 Also, if a car has only 10 minutes of parking available, the driver is notified and a '!' appears near the car to show the notification.
 When a driver is gets notified, he has a 25% chance of extending their booking by an interval that is permitted by the parking lot type.
 
-The starting parking lots can be modified by changing the "ParkingLots.txt" file.
+The initial parking lots can be modified by changing the "ParkingLots.txt" file.
 If the file is edited, it should follow the same format as the original file.
